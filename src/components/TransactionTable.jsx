@@ -3,6 +3,16 @@ import { useState } from "react";
 export default function TransactionTable({ transactions, deleteTransaction, role }) {
   
   const [search, setSearch] = useState("");
+  const [typeFilter, setTypeFilter] = useState("all");
+  const [categoryFilter, setCategoryFilter] = useState("all");
+
+  const filteredTransactions = transactions.filter((tx) => {
+    return (
+      (typeFilter === "all" || tx.type === typeFilter) &&
+      (categoryFilter === "all" || tx.category === categoryFilter)
+    );
+  });
+
 
   // 🔍 Simple search filter only
   const filtered = transactions.filter((t) =>
@@ -11,7 +21,32 @@ export default function TransactionTable({ transactions, deleteTransaction, role
   );
 
   return (
+    
     <div>
+
+
+      {/* 🔽 FILTER UI */}
+      <div className="flex gap-4 mb-4">
+        <select onChange={(e) => setTypeFilter(e.target.value)}>
+          <option value="all">All</option>
+          <option value="income">Income</option>
+          <option value="expense">Expense</option>
+        </select>
+
+        <select onChange={(e) => setCategoryFilter(e.target.value)}>
+          <option value="all">All</option>
+          <option value="Food">Food</option>
+          <option value="Salary">Salary</option>
+          <option value="Shopping">Shopping</option>
+        </select>
+      </div>
+
+      {/* 🔽 DATA RENDER */}
+      {filteredTransactions.map((tx) => (
+        <div key={tx.id}>
+          {tx.category} - {tx.amount}
+        </div>
+      ))}
 
       {/* 🔍 Search Input */}
       <input

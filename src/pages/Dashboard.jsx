@@ -6,7 +6,7 @@ import { transactions as initialData } from "../Data/mockData";
 import Insights from "../components/Insights";
 import AddTransaction from "../components/AddTransaction";
 import { useState, useEffect,useRef} from "react";
-
+ 
 
 export default function Dashboard() {
   const [role, setRole] = useState("viewer");   
